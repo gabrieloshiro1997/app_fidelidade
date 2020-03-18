@@ -14,10 +14,10 @@ class AutenticacaoModel {
             let usuario = await AutenticacaoService.ObterDadosLoginUsuario(u.email);
 
             if(!usuario)
-                throw { message: "Usuário não encontrado", statusCode: 404 };
+                throw { message: "Usuário não encontrado", statusCode: 401 };
 
             if(usuario.senha != u.senha){
-                throw { message: "Senha inválida", statusCode: 400 };
+                throw { message: "Senha inválida", statusCode: 401 };
             }
 
             const token = jwt.sign({ id: u.id }, authConfig.secret, {
