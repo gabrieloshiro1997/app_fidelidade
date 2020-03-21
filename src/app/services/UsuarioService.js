@@ -31,7 +31,7 @@ class UsuarioService {
     CriarUsuario = (usuario) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `INSERT INTO usuario (nome, cpf, email, senha) VALUES ('${usuario.nome}', '${usuario.cpf}', '${usuario.email}', '${usuario.senha}')`, 
+                `INSERT INTO usuario (nome, cpf, email) VALUES ('${usuario.nome}', '${usuario.cpf}', '${usuario.email}')`, 
                 (err, rows) => {                                          
                     if(err) reject({ err, message: "Erro ao criar usuário", statusCode: 500 });
     
@@ -44,7 +44,7 @@ class UsuarioService {
     AtualizarUsuario = (usuario) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `UPDATE usuario SET nome = '${usuario.nome}', cpf = '${usuario.cpf}', email = '${usuario.email}', senha = '${usuario.senha}' WHERE id = '${usuario.id}'`, 
+                `UPDATE usuario SET nome = '${usuario.nome}', cpf = '${usuario.cpf}', email = '${usuario.email}' WHERE id = '${usuario.id}'`, 
                 (err, rows) => {                                          
                     if(err) reject({ err, message: "Erro ao atualizar usuário", statusCode: 500 });
     

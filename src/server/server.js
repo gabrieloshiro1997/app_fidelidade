@@ -7,7 +7,8 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cors());
  
-require('../app/controllers/UsuarioController')(server);
 require('../app/controllers/AutenticacaoController')(server);
+require('../app/controllers/UsuarioController')(server);
+require('../app/controllers/EstabelecimentoController')(server);
 
 module.exports = server;

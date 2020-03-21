@@ -37,7 +37,7 @@ class UsuarioModel {
         
         try {
 
-            if(!u.nome || !u.cpf || !u.email || !u.senha)
+            if(!u.nome || !u.cpf || !u.email)
                 throw { message: "Preencha todos os campos", statusCode: 400 };
 
             let usuarioExistente = await UsuarioService.ObterUsuarioEmailCPF(u.email, u.cpf);
@@ -61,7 +61,7 @@ class UsuarioModel {
         
         try {
 
-            if(!u.id || !u.nome || !u.cpf || !u.email || !u.senha)
+            if(!u.id || !u.nome || !u.cpf || !u.email)
                 throw { message: "Preencha todos os campos", statusCode: 400 };
             
             let usuario = await UsuarioService.ObterUsuario(u.id);
