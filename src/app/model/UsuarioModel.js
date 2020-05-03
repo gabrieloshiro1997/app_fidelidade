@@ -1,4 +1,5 @@
 const UsuarioService = require('../services/UsuarioService');
+const { enviarEmail } = require('../modules/EnviarEmail');
 
 class UsuarioModel {
 
@@ -43,9 +44,14 @@ class UsuarioModel {
             let usuarioExistente = await UsuarioService.ObterUsuarioEmailCPF(u.email, u.cpf);
 
             if(usuarioExistente)
-                throw { message: "Já possui cadastro com os dados informados", statusCode: 409 };
+                throw { message: "Já possui um cadastro de um usuário com os dados informados", statusCode: 409 };
 
-            let idUsuarioCriado = await UsuarioService.CriarUsuario(u);
+				
+			const senha = Math.random().toString(36).slice(-8);
+
+            let idUsuarioCriado = await UsuarioService.CriarUsuario(u, senha);
+
+			await enviarEmail(u.email, senha);
 
             let usuario = await UsuarioService.ObterUsuario(idUsuarioCriado);
 

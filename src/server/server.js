@@ -10,5 +10,6 @@ server.use(cors());
 require('../app/controllers/AutenticacaoController')(server);
 require('../app/controllers/UsuarioController')(server);
 require('../app/controllers/EstabelecimentoController')(server);
+require('../app/controllers/ClienteController')(server);
 
 module.exports = server;

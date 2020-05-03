@@ -2,15 +2,14 @@ const EstabelecimentoService = require('../services/EstabelecimentoService');
 
 class EstabelecimentoModel {
     CriarEstabelecimento = async (e) => {
-        console.log(e)
         try {
-            if(!e.nomeFantasia || !e.cnpj)
+            if(!e.nomeFantasia || !e.cnpj || !e.email)
                 throw { message: "Preencha todos os campos", statusCode: 400 };
             
-            let estabelecimentoExistente = await EstabelecimentoService.ObterEstabelecimentoCNPJ(e.cnpj);
+            let estabelecimentoExistente = await EstabelecimentoService.ObterEstabelecimentoCNPJ(e.cnpj, e.email);
 
             if(estabelecimentoExistente)
-                throw { message: "Já possui estabelecimento cadastrado com o CNPJ informado ", statusCode: 409 };
+                throw { message: "Já possui um cadastro de um estabelecimento os dados informados", statusCode: 409 };
 
             let idEstabelecimentoCriado = await EstabelecimentoService.CriarEstabelecimento(e);
 

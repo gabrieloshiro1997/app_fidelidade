@@ -4,8 +4,6 @@ const router = express.Router();
 const EstabelecimentoModel = require('../model/EstabelecimentoModel');
 const authMiddleware =  require('../middleware/auth');
 
-// router.use(authMiddleware);
-
 router.post('/', async (req, res) => {
     
     try {
