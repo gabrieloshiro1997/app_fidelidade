@@ -49,7 +49,7 @@ class AutenticacaoModel {
             if(!estabelecimento)
                 throw { message: "Estabelecimento não encontrado", statusCode: 401 };
 
-            if(estabelecimento.status_estabelecimento_id == 2){
+            if(estabelecimento.status_estabelecimento_id == 1){
                 throw { message: "Aguarde a aprovação do seu estabelecimento para poder realizar o login", statusCode: 401 };
 			}
 			
