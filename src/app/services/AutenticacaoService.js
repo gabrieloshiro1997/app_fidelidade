@@ -12,7 +12,20 @@ class AutenticacaoService {
                 }
             )}
         )
-    }
+	}
+	
+	ObterDadosLoginEstabelecimento = (email) => {
+		return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT * FROM estabelecimento WHERE email = '${email}'`, 
+                (err, rows) => {                                             
+                    if(err) reject({ err, message: "Erro ao realizar a autenticação do estabelecimento", statusCode: 500 });
+    
+                    else resolve(rows[0]);
+                }
+            )}
+        )
+	}
 }
 
 module.exports = new AutenticacaoService();
