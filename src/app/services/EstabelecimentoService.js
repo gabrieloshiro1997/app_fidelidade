@@ -13,11 +13,25 @@ class EstabelecimentoService {
                 }
             )}
         )
-    }
+	}
+
+	ObterEstabelecimentos = () => {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT id, nome_fantasia, cnpj, email, status_estabelecimento_id FROM estabelecimento`, 
+                (err, rows) => {                                             
+                    if(err) reject({ err, message: "Erro ao realizar a consulta de estabelecimentos", statusCode: 500 });
+    
+                    else resolve(rows);
+                }
+            )}
+        )
+	}
+	
     ObterEstabelecimento = (id) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT id, nome_fantasia, cnpj, status_estabelecimento_id FROM estabelecimento WHERE id = '${id}'`, 
+                `SELECT id, nome_fantasia, cnpj, email, status_estabelecimento_id FROM estabelecimento WHERE id = '${id}'`, 
                 (err, rows) => {                                             
                     if(err) reject({ err, message: "Erro ao realizar a consulta de estabelecimento", statusCode: 500 });
     
@@ -38,7 +52,33 @@ class EstabelecimentoService {
                 }
             )}
         )
-    }
+	}
+	
+	AprovarEstabelecimento = (idEstabelecimento, senha) => {
+		return new Promise((resolve, reject) => {
+            connection.query(
+                `UPDATE estabelecimento SET status_estabelecimento_id = '2', senha = '${senha}' WHERE id = '${idEstabelecimento}'`, 
+                (err, rows) => {                                          
+                    if(err) reject({ err, message: "Erro ao alterar o status do estabelecimento", statusCode: 500 });
+    
+                    else resolve(rows.insertId);
+                }
+            )}
+        )
+	}
+
+	ReprovarEstabelecimento = (idEstabelecimento) => {
+		return new Promise((resolve, reject) => {
+            connection.query(
+                `UPDATE estabelecimento SET status_estabelecimento_id = '3' WHERE id = '${idEstabelecimento}'`, 
+                (err, rows) => {                                          
+                    if(err) reject({ err, message: "Erro ao alterar o status do estabelecimento", statusCode: 500 });
+    
+                    else resolve(rows.insertId);
+                }
+            )}
+        )
+	}
 }
 
 module.exports = new EstabelecimentoService();

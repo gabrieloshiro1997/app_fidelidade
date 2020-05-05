@@ -57,7 +57,7 @@ class AutenticacaoModel {
                 throw { message: "Senha inválida", statusCode: 401 };
             }
 
-            const token = jwt.sign({ id: u.id, tipoUsuario: 2 }, authConfig.secret, {
+            const token = jwt.sign({ id: estabelecimento.id, tipoUsuario: 2 }, authConfig.secret, {
                 expiresIn: 43200
             });
 
