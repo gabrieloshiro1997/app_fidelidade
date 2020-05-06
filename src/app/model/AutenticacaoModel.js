@@ -22,7 +22,7 @@ class AutenticacaoModel {
 
             const token = jwt.sign({ 
 				id: u.id, 
-				acessoUsuario: usuario.acesso_usuario_id 
+				tipoUsuario: usuario.acesso_usuario_id 
 			}, 
 			authConfig.secret, 
 			{
