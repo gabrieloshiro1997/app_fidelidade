@@ -5,7 +5,7 @@ class UsuarioService {
     ObterUsuarios = () => {
         return new Promise((resolve, reject) => {
             connection.query(
-                "SELECT id, nome, cpf, email FROM usuario", 
+                "SELECT id, nome, cpf, email FROM usuario WHERE acesso_usuario_id = 3", 
                 (err, rows) => {                                                
                     if(err) reject({ err, message: "Erro ao realizar a consulta de usuários", statusCode: 500 });
     
