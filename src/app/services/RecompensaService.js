@@ -4,7 +4,7 @@ class RecompensaService {
     ObterRecompensasPorEstabelecimento = (estabelecimentoId) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT id, pontos, status, data_validade, estabelecimento_id FROM recompensa WHERE estabelecimento_id = ${estabelecimentoId};`,
+                `SELECT id, pontos, status, data_validade, preco, descricao, estabelecimento_id FROM recompensa WHERE estabelecimento_id = ${estabelecimentoId};`,
                 (err, rows) => {
                     if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa", statusCode: 500 });
 
@@ -18,11 +18,11 @@ class RecompensaService {
     ObterRecompensaPorId = (recompensaId) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT id, pontos, status, data_validade, estabelecimento_id FROM recompensa WHERE id = ${recompensaId};`,
+                `SELECT id, pontos, status, descricao, preco, DATE_FORMAT(data_validade, '%Y-%m-%d') as data_validade, estabelecimento_id FROM recompensa WHERE id = ${recompensaId};`,
                 (err, rows) => {
                     if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa", statusCode: 500 });
 
-                    else resolve(rows);
+                    else resolve(rows[0]);
                 }
             )
         }

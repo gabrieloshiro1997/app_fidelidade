@@ -10,6 +10,16 @@ class RecompensaModel {
 
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }
+	}
+	
+	ObterRecompensaPorId = async (recompensaId) => {
+        try {
+            return await RecompensaService.ObterRecompensaPorId(recompensaId);
+
+        } catch (e) {
+
+            throw { error: e.err, message: e.message, statusCode: e.statusCode };
+        }
     }
 
     CriarRecompensa = async (r) => {

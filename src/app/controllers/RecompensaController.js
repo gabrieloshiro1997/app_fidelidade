@@ -4,7 +4,7 @@ const router = express.Router();
 const RecompensaModel = require('../model/RecompensaModel');
 const authMiddleware =  require('../middleware/auth');
 
-router.get('/:estabelecimentoId', async (req, res) => {
+router.get('/estabelecimento/:estabelecimentoId', async (req, res) => {
 
     try {
         let estabelecimentoId = req.params.estabelecimentoId;
@@ -17,6 +17,21 @@ router.get('/:estabelecimentoId', async (req, res) => {
         return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
     }
 });
+
+router.get('/:recompensaId', async (req, res) => {
+
+    try {
+        let recompensaId = req.params.recompensaId;
+        let e = await RecompensaModel.ObterRecompensaPorId(recompensaId);
+
+        return res.status(200).send(e);
+
+    } catch (e) {
+
+        return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+    }
+});
+
 
 router.post('/', async (req, res) => {
 
