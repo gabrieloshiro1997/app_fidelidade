@@ -63,4 +63,47 @@ router.put('/', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+
+    try {
+        
+        let id = req.params.id;
+        
+        await RecompensaModel.DeletarRecompensa(id);
+
+        return res.status(204).end();
+    } catch (e) {
+
+        return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+    }
+});
+
+router.put('/ativar/:idRecompensa', async(req, res) => {
+
+	try {
+		let idRecompensa = req.params.idRecompensa;
+
+		await RecompensaModel.AtivarRecompensa(idRecompensa);
+
+		return res.status(201).end();
+	} catch (e) {
+
+		return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+	}
+})
+
+router.put('/inativar/:idRecompensa', async(req, res) => {
+
+	try {
+		let idRecompensa = req.params.idRecompensa;
+
+		await RecompensaModel.InativarRecompensa(idRecompensa);
+
+		return res.status(201).end();
+	} catch (e) {
+
+		return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+	}
+})
+
 module.exports = app => app.use('/api/recompensa', router);
