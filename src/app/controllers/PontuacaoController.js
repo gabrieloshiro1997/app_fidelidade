@@ -5,14 +5,13 @@ const PontuacaoModel = require('../model/PontuacaoModel');
 const authMiddleware =  require('../middleware/auth');
 router.use(authMiddleware);
 
-router.get('/:userId', async (req, res) => {
+router.get('/usuario/', async (req, res) => {
 
     try {
-        let recompensaId = req.params.recompensaId;
         // @ts-ignore
-        let e = await PontuacaoModel.ObterRecompensaPorId(recompensaId);
+        let listaPontuacao = await PontuacaoModel.ObterPontuacaoCliente(req.userId);
 
-        return res.status(200).send(e);
+        return res.status(200).send(listaPontuacao);
 
     } catch (e) {
 
@@ -20,7 +19,19 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
+router.get('/estabelecimento/', async (req, res) => {
 
+    try {
+        // @ts-ignore
+        let listaPontuacao = await PontuacaoModel.ObterPontuacaoEstabelecimento(req.userId);
+
+        return res.status(200).send(listaPontuacao);
+
+    } catch (e) {
+
+        return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+    }
+});
 router.post('/', async (req, res) => {
 
     try {

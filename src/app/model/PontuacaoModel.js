@@ -24,6 +24,22 @@ class PontuacaoModel {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }
     }
+    ObterPontuacaoCliente = async (userId) => {
+        try {
+            let listaPontuacao = await PontuacaoService.ObterPontuacaoCliente(userId);
+            return listaPontuacao;
+        } catch (e) {
+            throw { error: e.err, message: e.message, statusCode: e.statusCode };
+        }  
+    }
+    ObterPontuacaoEstabelecimento = async (estabelecimentoId) => {
+        try {
+            let listaPontuacao = await PontuacaoService.ObterPontuacaoEstabelecimento(estabelecimentoId);
+            return listaPontuacao;
+        } catch (e) {
+            throw { error: e.err, message: e.message, statusCode: e.statusCode };
+        }  
+    }
 }
 
 module.exports = new PontuacaoModel();
