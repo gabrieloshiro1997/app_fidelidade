@@ -3,7 +3,7 @@ const router = express.Router();
 
 const RecompensaModel = require('../model/RecompensaModel');
 const authMiddleware =  require('../middleware/auth');
-
+router.use(authMiddleware);
 router.get('/estabelecimento/:estabelecimentoId', async (req, res) => {
 
     try {

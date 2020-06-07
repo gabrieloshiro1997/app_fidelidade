@@ -13,5 +13,5 @@ require('../app/controllers/PreCadastroEstabelecimentoController')(server);
 require('../app/controllers/EstabelecimentoController')(server);
 require('../app/controllers/ClienteController')(server);
 require('../app/controllers/RecompensaController')(server);
-
+require('../app/controllers/PontuacaoController')(server);
 module.exports = server;
