@@ -32,7 +32,8 @@ class PontuacaoService {
 				`
 				UPDATE pontuacao
 				SET
-				valor = ${pontuacao.valor}
+				valor = ${pontuacao.valor},
+				descricao = '${pontuacao.descricao}'
 				WHERE id = ${pontuacao.id};
 				`,
 				(err, rows) => {
