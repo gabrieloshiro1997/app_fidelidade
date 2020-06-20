@@ -8,17 +8,10 @@ class PontuacaoModel {
                 throw { message: "Preencha todos os campos", statusCode: 400 };
             pontuacao.valor = Math.floor(pontuacao.valor * 10);
             let cliente = await ClienteService.ObterUsuarioEmailCPF(null, pontuacao.cpfUsuario);
-            if(cliente == undefined){
+            if (cliente == undefined) {
                 throw { message: "Cliente não encontrado", statusCode: 400 };
             }
-            let buscaPontuacao = await PontuacaoService.BuscarPontosUserId(cliente.id, estabelecimentoId);
-            if (!buscaPontuacao) {
-                let criarPontuacao = await PontuacaoService.CriarPontuacao(pontuacao,estabelecimentoId,cliente.id);
-            } else {
-                pontuacao.valor += buscaPontuacao.valor;
-                pontuacao.id = buscaPontuacao.id;
-                let atualizarPontuacao = await PontuacaoService.AtualizarPontucao(pontuacao)
-            }
+            await PontuacaoService.CriarPontuacao(pontuacao, estabelecimentoId, cliente.id);
             return pontuacao;
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
@@ -30,7 +23,7 @@ class PontuacaoModel {
             return listaPontuacao;
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
-        }  
+        }
     }
     ObterPontuacaoEstabelecimento = async (estabelecimentoId) => {
         try {
@@ -38,7 +31,7 @@ class PontuacaoModel {
             return listaPontuacao;
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
-        }  
+        }
     }
 }
 
