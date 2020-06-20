@@ -9,7 +9,7 @@ class PontuacaoModel {
             pontuacao.valor = Math.floor(pontuacao.valor * 10);
             let cliente = await ClienteService.ObterUsuarioEmailCPF(null, pontuacao.cpfUsuario);
             if (cliente == undefined) {
-                throw { message: "Cliente não encontrado", statusCode: 400 };
+                throw { message: "Cliente não encontrado", statusCode: 404 };
             }
             await PontuacaoService.CriarPontuacao(pontuacao, estabelecimentoId, cliente.id);
             return pontuacao;

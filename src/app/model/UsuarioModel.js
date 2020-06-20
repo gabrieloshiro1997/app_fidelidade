@@ -33,6 +33,25 @@ class UsuarioModel {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }
     }
+    ObterUsuarioCPF = async (cpf) => {
+        
+        try {
+            
+            if(!cpf) 
+                throw { message: "cpf do usuário não identificado", statusCode: 400 };
+            
+            let usuario = await UsuarioService.ObterUsuarioEmailCPF(null,cpf);
+            
+            if(!usuario)
+                throw { message: "Usuário não encontrado", statusCode: 404 };
+
+            return usuario;
+
+        } catch (e) {
+            
+            throw { error: e.err, message: e.message, statusCode: e.statusCode };
+        }
+    }
 
     CriarUsuario = async (u) => {
         

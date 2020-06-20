@@ -28,7 +28,7 @@ class AutenticacaoModel {
 			{
                 expiresIn: 43200
             });
-
+            delete usuario.senha;
             return { usuario, token};
 
         } catch (e) {

@@ -6,6 +6,7 @@ const authMiddleware =  require('../middleware/auth');
 
 router.use(authMiddleware);
 
+//lista de usuarios
 router.get('/', async (req, res) => {
     try {
         
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
         return res.status(error.statusCode).send({ statusCode: error.statusCode, message: error.message, error: error.teste });
     }
 });
-
+//get usuario by ID
 router.get('/:id', async (req, res) => {
     try {
         let id = req.params.id;
@@ -34,6 +35,24 @@ router.get('/:id', async (req, res) => {
         return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
     }
 });
+
+//get usuario by CPF
+router.get('/cpf/:cpf', async (req, res) => {
+    try {
+        let cpf = req.params.cpf;
+        
+        let usuario = await UsuarioModel.ObterUsuarioCPF(cpf);
+        
+        if(!usuario)
+            return res.status(404).send({ statusCode: 404, message: 'Usuário não encontrado' });
+
+        return res.status(200).send(usuario);
+    
+    } catch (e) {
+        return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+    }
+});
+
 
 router.post('/', async (req, res) => {
     

@@ -26,25 +26,6 @@ class PontuacaoService {
 		}
 		)
 	}
-	AtualizarPontucao = (pontuacao) => {
-		return new Promise((resolve, reject) => {
-			connection.query(
-				`
-				UPDATE pontuacao
-				SET
-				valor = ${pontuacao.valor},
-				descricao = '${pontuacao.descricao}'
-				WHERE id = ${pontuacao.id};
-				`,
-				(err, rows) => {
-					if (err) reject({ err, message: "Erro ao criar recompensa", statusCode: 500 });
-
-					else resolve(rows.insertId);
-				}
-			)
-		}
-		)
-	}
 	BuscarPontosUserId = (userId, estabelecimentoId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
@@ -76,9 +57,11 @@ class PontuacaoService {
 	ObterPontuacaoEstabelecimento = (estabelecimentoId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`select u.nome,u.cpf,p.descricao,p.valor from pontuacao p, usuario u
-				where p.estabelecimento_id = ${estabelecimentoId}
-				and u.id = p.usuario_id; `,
+				`SELECT u.nome,u.cpf,p.descricao,p.valor 
+				FROM pontuacao p, usuario u
+				WHERE p.estabelecimento_id = ${estabelecimentoId}
+				AND u.id = p.usuario_id
+				ORDER BY data_pontuacao; `,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de pontuacao", statusCode: 500 });
 
