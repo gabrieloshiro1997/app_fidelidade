@@ -60,7 +60,7 @@ class AutenticacaoModel {
             const token = jwt.sign({ id: estabelecimento.id, tipoUsuario: 2 }, authConfig.secret, {
                 expiresIn: 43200
             });
-
+            delete estabelecimento.senha;
             return { estabelecimento, token};
 
         } catch (e) {
