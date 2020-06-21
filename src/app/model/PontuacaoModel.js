@@ -1,5 +1,6 @@
 const PontuacaoService = require('../services/PontuacaoService');
 const ClienteService = require('../services/UsuarioService')
+const SaldoService = require('../services/SaldoService')
 class PontuacaoModel {
 
     CriarPontuacao = async (pontuacao, estabelecimentoId) => {
@@ -12,6 +13,7 @@ class PontuacaoModel {
                 throw { message: "Cliente não encontrado", statusCode: 404 };
             }
             await PontuacaoService.CriarPontuacao(pontuacao, estabelecimentoId, cliente.id);
+            await SaldoService.AtualizarSaldo(pontuacao.valor, estabelecimentoId, cliente.id, false);
             return pontuacao;
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };

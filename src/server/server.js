@@ -14,4 +14,5 @@ require('../app/controllers/EstabelecimentoController')(server);
 require('../app/controllers/ClienteController')(server);
 require('../app/controllers/RecompensaController')(server);
 require('../app/controllers/PontuacaoController')(server);
+require('../app/controllers/RetiradaController')(server);
 module.exports = server;

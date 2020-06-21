@@ -42,9 +42,12 @@ class PontuacaoService {
 	ObterPontuacaoCliente = (userId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT e.nome_fantasia, p.descricao,p.valor FROM pontuacao p, estabelecimento e
+				`SELECT distinct e.id, e.nome_fantasia, s.saldo as valor
+				FROM pontuacao p, estabelecimento e, saldo s
 				WHERE p.usuario_id = ${userId}
-				AND e.id = p.estabelecimento_id; `,
+				AND e.id = p.estabelecimento_id
+                AND s.usuario_id = p.usuario_id
+                AND s.estabelecimento_id = e.id;`,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de pontuacao", statusCode: 500 });
 
@@ -71,7 +74,7 @@ class PontuacaoService {
 		}
 		)
 	}
-
+	
 }
 
 module.exports = new PontuacaoService();
