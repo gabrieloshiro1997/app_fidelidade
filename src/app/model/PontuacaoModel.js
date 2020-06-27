@@ -21,8 +21,9 @@ class PontuacaoModel {
     }
     ObterPontuacaoCliente = async (userId) => {
         try {
-            let listaPontuacao = await PontuacaoService.ObterPontuacaoCliente(userId);
-            return listaPontuacao;
+            let listaPontuacao = await PontuacaoService.ObterPontuacaoHistoricoCliente(userId);
+            let saldoTotal = await PontuacaoService.ObterSaldoTotalCliente(userId);
+            return { listaPontuacao,saldoTotal };
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }

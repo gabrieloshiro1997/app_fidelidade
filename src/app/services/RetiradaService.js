@@ -14,7 +14,34 @@ class RecompensaService {
 		}
 		)
 	}
+	ObterResgastesPorUsuario = (userId) => {
+		return new Promise((resolve, reject) => {
+			connection.query(
+				`SELECT * FROM retirada WHERE usuario_id = ${userId};`,
+				(err, rows) => {
+					if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa por usuário", statusCode: 500 });
 
+					else resolve(rows);
+				}
+			)
+		}
+		)
+	}
+	ObterResgastesPorEstabelecimento = (estabelecimentoId) => {
+		return new Promise((resolve, reject) => {
+			connection.query(
+				`SELECT * FROM retirada WHERE recompensa_id IN (
+					SELECT id FROM recompensa WHERE estabelecimento_id = ${estabelecimentoId}
+					);`,
+				(err, rows) => {
+					if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa por estabelecimento", statusCode: 500 });
+
+					else resolve(rows);
+				}
+			)
+		}
+		)
+	}
 	ObterRecompensaPorId = (recompensaId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(

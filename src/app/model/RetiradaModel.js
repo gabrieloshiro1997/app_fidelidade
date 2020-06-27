@@ -11,6 +11,24 @@ class RetiradaModel {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }
     }
+    ObterResgastesPorUsuario = async (userId) => {
+        try {
+            return await RetiradaService.ObterResgastesPorUsuario(userId);
+
+        } catch (e) {
+
+            throw { error: e.err, message: e.message, statusCode: e.statusCode };
+        }
+    }
+    ObterResgastesPorEstabelecimento = async (estabelecimentoId) => {
+        try {
+            return await RetiradaService.ObterResgastesPorEstabelecimento(estabelecimentoId);
+
+        } catch (e) {
+
+            throw { error: e.err, message: e.message, statusCode: e.statusCode };
+        }
+    }
     RetirarRecompensa = async (r) => {
         try {
             if ( !r.recompensaId || !r.usuarioId)
