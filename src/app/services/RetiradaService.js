@@ -17,7 +17,7 @@ class RecompensaService {
 	ObterResgastesPorUsuario = (userId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT * FROM retirada WHERE usuario_id = ${userId};`,
+				`SELECT * FROM retirada WHERE usuario_id = ${userId} ORDER BY data_retirada DESC;`,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa por usuário", statusCode: 500 });
 
@@ -30,9 +30,11 @@ class RecompensaService {
 	ObterResgastesPorEstabelecimento = (estabelecimentoId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT * FROM retirada WHERE recompensa_id IN (
+				`SELECT distinct r.id, u.nome, u.cpf, r.data_retirada , r.pontos_gastos FROM retirada r, usuario u WHERE usuario_id = u.id
+				 AND r.recompensa_id IN
+				 (
 					SELECT id FROM recompensa WHERE estabelecimento_id = ${estabelecimentoId}
-					);`,
+				 ) ORDER BY data_retirada DESC;`,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa por estabelecimento", statusCode: 500 });
 

@@ -42,12 +42,13 @@ class PontuacaoService {
 	ObterPontuacaoHistoricoCliente = (userId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT distinct e.id, e.nome_fantasia, p.descricao,p.data_pontuacao, p.valor 
+				`SELECT distinct p.id, e.nome_fantasia, p.descricao,p.data_pontuacao, p.valor 
 				FROM pontuacao p, estabelecimento e, saldo s
 				WHERE p.usuario_id = ${userId}
 				AND e.id = p.estabelecimento_id
                 AND s.usuario_id = p.usuario_id
-                AND s.estabelecimento_id = e.id;`,
+				AND s.estabelecimento_id = e.id
+				ORDER BY p.data_pontuacao DESC;`,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de pontuacao", statusCode: 500 });
 
@@ -60,9 +61,9 @@ class PontuacaoService {
 	ObterSaldoTotalCliente = (userId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT s.saldo
+				`SELECT distinct s.id, s.saldo
 				FROM  saldo s
-                AND s.usuario_id = ${userId};`,
+                WHERE s.usuario_id = ${userId};`,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de saldo", statusCode: 500 });
 
