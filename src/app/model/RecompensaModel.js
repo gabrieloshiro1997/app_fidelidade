@@ -87,7 +87,7 @@ class RecompensaModel {
             }
 
             return await RecompensaService.AtivarRecompensa(idRecompensa);
-		} catch (error) {
+		} catch (e) {
 			
 			throw { error: e.err, message: e.message, statusCode: e.statusCode };
 		}
@@ -102,7 +102,7 @@ class RecompensaModel {
             }
 
             return await RecompensaService.InativarRecompensa(idRecompensa);
-		} catch (error) {
+		} catch (e) {
 			
 			throw { error: e.err, message: e.message, statusCode: e.statusCode };
 		}
