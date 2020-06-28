@@ -31,7 +31,8 @@ class UsuarioService {
     CriarUsuario = (usuario, senha) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `INSERT INTO usuario (nome, cpf, email, senha, acesso_usuario_id) VALUES ('${usuario.nome}', '${usuario.cpf}', '${usuario.email}', '${senha}', '${usuario.acessoUsuario}');`, 
+                `INSERT INTO usuario (nome, cpf, email, senha, acesso_usuario_id, data_nasc, sexo)
+                VALUES ('${usuario.nome}', '${usuario.cpf}', '${usuario.email}', '${senha}', '${usuario.acessoUsuario}','${usuario.dataNascimento}','${usuario.sexo}');`, 
                 (err, rows) => {                                          
                     if(err) reject({ err, message: "Erro ao criar usuário", statusCode: 500 });
     
