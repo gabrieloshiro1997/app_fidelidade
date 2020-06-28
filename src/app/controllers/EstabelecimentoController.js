@@ -6,7 +6,7 @@ const authMiddleware =  require('../middleware/auth');
 
 router.use(authMiddleware);
 
-router.get('/', async (req, res) => {
+router.get('/',authMiddleware, async (req, res) => {
     
     try {
         

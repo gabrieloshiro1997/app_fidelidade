@@ -4,10 +4,9 @@ const router = express.Router();
 const UsuarioModel = require('../model/UsuarioModel');
 const authMiddleware =  require('../middleware/auth');
 
-router.use(authMiddleware);
 
 //lista de usuarios
-router.get('/', async (req, res) => {
+router.get('/',authMiddleware, async (req, res) => {
     try {
         
         let usuarios = await UsuarioModel.ObterUsuarios();
@@ -20,7 +19,7 @@ router.get('/', async (req, res) => {
     }
 });
 //get usuario by ID
-router.get('/:id', async (req, res) => {
+router.get('/:id',authMiddleware, async (req, res) => {
     try {
         let id = req.params.id;
         
@@ -37,7 +36,7 @@ router.get('/:id', async (req, res) => {
 });
 
 //get usuario by CPF
-router.get('/cpf/:cpf', async (req, res) => {
+router.get('/cpf/:cpf',authMiddleware, async (req, res) => {
     try {
         let cpf = req.params.cpf;
         
@@ -70,7 +69,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/', async (req, res) => {
+router.put('/',authMiddleware, async (req, res) => {
 
     try {
     
@@ -86,7 +85,7 @@ router.put('/', async (req, res) => {
     }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',authMiddleware, async (req, res) => {
 
     try {
         
