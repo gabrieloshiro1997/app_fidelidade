@@ -40,7 +40,16 @@ class RetiradaModel {
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }
-    }
+	}
+	
+	ObterHistoricoRetiradaClientePorEstabelecimento = async (userId, idEstabelecimento) => {
+		try {
+			let historico = await RetiradaService.ObterHistoricoRetiradaClientePorEstabelecimento(userId, idEstabelecimento);
+			return historico;
+		} catch (e) {
+			throw { error: e.err, message: e.message, statusCode: e.statusCode };
+		}
+	}
 }
 
 module.exports = new RetiradaModel();

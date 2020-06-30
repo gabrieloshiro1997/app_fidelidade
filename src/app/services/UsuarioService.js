@@ -18,11 +18,11 @@ class UsuarioService {
     ObterUsuario = (id) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT id, nome, cpf, email FROM usuario WHERE id = ${id}`, 
+                `SELECT id, nome, cpf, email, DATE_FORMAT(data_nasc, '%Y-%m-%d') data_nasc, sexo FROM usuario WHERE id = ${id}`, 
                 (err, rows) => {                                             
                     if(err) reject({ err, message: "Erro ao realizar a consulta de usuário", statusCode: 500 });
-    
-                    else resolve(rows[0]);
+
+					else resolve(rows[0]);
                 }
             )}
         )
@@ -45,7 +45,7 @@ class UsuarioService {
     AtualizarUsuario = (usuario) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `UPDATE usuario SET nome = '${usuario.nome}', cpf = '${usuario.cpf}', email = '${usuario.email}' WHERE id = '${usuario.id}'`, 
+                `UPDATE usuario SET nome = '${usuario.nome}', cpf = '${usuario.cpf}', email = '${usuario.email}', data_nasc = '${usuario.dataNascimento}', sexo = '${usuario.sexo}' WHERE id = '${usuario.id}'`, 
                 (err, rows) => {                                          
                     if(err) reject({ err, message: "Erro ao atualizar usuário", statusCode: 500 });
     

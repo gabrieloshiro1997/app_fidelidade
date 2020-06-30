@@ -35,7 +35,25 @@ class PontuacaoModel {
         } catch (e) {
             throw { error: e.err, message: e.message, statusCode: e.statusCode };
         }
-    }
+	}
+	
+	ObterPontuacoesEstabelecimentoPorCliente = async (idUsuario) => {
+		try {
+			let listaEstabelecimentos = await PontuacaoService.ObterPontuacoesEstabelecimentoPorCliente(idUsuario);
+			return listaEstabelecimentos;
+		} catch (e) {
+			throw { error: e.err, message: e.message, statusCode: e.statusCode };
+		}
+	} 
+
+	ObterHistoricoPontuacaoClientePorEstabelecimento = async (idUsuario, idEstabelecimento) => {
+		try {
+			let historico = await PontuacaoService.ObterHistoricoPontuacaoClientePorEstabelecimento(idUsuario, idEstabelecimento);
+			return historico;
+		} catch (e) {
+			throw { error: e.err, message: e.message, statusCode: e.statusCode };
+		}
+	}
 }
 
 module.exports = new PontuacaoModel();

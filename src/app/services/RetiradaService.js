@@ -97,6 +97,23 @@ class RecompensaService {
 		}
 		)
 	}
+
+	ObterHistoricoRetiradaClientePorEstabelecimento = (idUsuario, idEstabelecimento) => {
+		return new Promise((resolve, reject) => {
+			connection.query(
+				`select rec.descricao, ret.pontos_gastos pontos_gastos, ret.data_retirada from retirada ret
+				inner join recompensa rec on rec.id = ret.recompensa_id 
+				where ret.usuario_id = ${idUsuario}
+				and rec.estabelecimento_id = ${idEstabelecimento}
+				order by ret.data_retirada desc;`,
+				(err, rows) => {
+					if (err) reject({ err, message: "Erro ao realizar a consulta do historico de retirada", statusCode: 500 });
+
+					else resolve(rows);
+				}
+			)
+		})
+	}
 }
 
 module.exports = new RecompensaService();

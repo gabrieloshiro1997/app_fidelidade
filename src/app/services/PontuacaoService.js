@@ -90,6 +90,39 @@ class PontuacaoService {
 		}
 		)
 	}
+
+	ObterPontuacoesEstabelecimentoPorCliente = (clienteId) => {
+		return new Promise((resolve, reject) => {
+			connection.query(
+				`select e.id as id_estabelecimento, e.nome_fantasia, s.saldo from saldo s
+				inner join estabelecimento e on
+				e.id = s.estabelecimento_id
+				where usuario_id = ${clienteId};`,
+				(err, rows) => {
+					if (err) reject({ err, message: "Erro ao realizar a consulta de pontuacao", statusCode: 500 });
+
+					else resolve(rows);
+				}
+			)
+		})
+	}
+
+	ObterHistoricoPontuacaoClientePorEstabelecimento = (clienteId, estabelecimentoId) => {
+		return new Promise((resolve, reject) => {
+			connection.query(
+				`select descricao, valor, data_pontuacao from pontuacao
+				where usuario_id = ${clienteId}
+				AND estabelecimento_id = ${estabelecimentoId}
+				ORDER BY data_pontuacao DESC;`,
+				(err, rows) => {
+					if (err) reject({ err, message: "Erro ao realizar a consulta do historico de pontuacao", statusCode: 500 });
+
+					else resolve(rows);
+				}
+			)
+		}
+		)
+	}
 	
 }
 

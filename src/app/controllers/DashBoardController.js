@@ -15,4 +15,4 @@ router.get('/:estabelecimentoId', async (req, res) => {
     }
 });
 
-module.exports = app => app.use('/api/dashborad', router);
+module.exports = app => app.use('/api/dashboard', router);

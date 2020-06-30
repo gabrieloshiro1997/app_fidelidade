@@ -86,7 +86,7 @@ class UsuarioModel {
         
         try {
 
-            if(!u.id || !u.nome || !u.cpf || !u.email)
+            if(!u.id || !u.nome || !u.cpf || !u.email || !u.sexo || !u.dataNascimento)
                 throw { message: "Preencha todos os campos", statusCode: 400 };
             
             let usuario = await UsuarioService.ObterUsuario(u.id);
