@@ -4,10 +4,11 @@ class DashBoardService {
     ObterPontosXSexo = (estabelecimentoId) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT u.sexo, SUM(p.valor) as valor FROM usuario u, pontuacao p
-                    WHERE p.usuario_id = u.id
-                    AND p.estabelecimento_id = ${estabelecimentoId} 
-                    GROUP BY u.sexo;`, 
+                `SELECT sexo, COUNT( distinct u.id) quantidade, SUM(p.valor) pontos FROM usuario u
+				INNER JOIN pontuacao p ON
+				u.id = p.usuario_id
+				WHERE p.estabelecimento_id = ${estabelecimentoId}
+				GROUP BY sexo;`, 
                 (err, rows) => {                                             
                     if(err) reject({ err, message: "Erro ao realizar a consulta de Sexo X Pontos", statusCode: 500 });
     
@@ -22,7 +23,8 @@ class DashBoardService {
                 `SELECT MONTH(p.data_pontuacao) as mes, SUM(p.valor) as valor FROM usuario u, pontuacao p
                     WHERE p.usuario_id = u.id
                     AND p.estabelecimento_id = ${estabelecimentoId}
-                    GROUP BY MONTH(p.data_pontuacao);`, 
+					GROUP BY MONTH(p.data_pontuacao)
+					ORDER BY mes ASC;`, 
                 (err, rows) => {                                             
                     if(err) reject({ err, message: "Erro ao realizar a consulta de Mes X Pontos", statusCode: 500 });
     
@@ -34,12 +36,11 @@ class DashBoardService {
     ObterRecompensasRetirada = (estabelecimentoId) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT rec.descricao, count(ret.id) as quantidade
-                FROM estabelecimento e, retirada ret, recompensa rec
-                WHERE ret.recompensa_id = rec.id
-                AND rec.estabelecimento_id = e.id
-                AND e.id = ${estabelecimentoId}
-                GROUP BY rec.id;`, 
+                `select rec.descricao produto, sum(ret.pontos_gastos) pontuacao from recompensa rec
+				inner join retirada ret on
+				rec.id = ret.recompensa_id
+				where estabelecimento_id = ${estabelecimentoId}
+				group by rec.id;`, 
                 (err, rows) => {                                             
                     if(err) reject({ err, message: "Erro ao realizar a consulta de Retirada X Recompensa", statusCode: 500 });
     
