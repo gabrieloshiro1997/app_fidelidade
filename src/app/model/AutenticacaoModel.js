@@ -52,6 +52,10 @@ class AutenticacaoModel {
             if(estabelecimento.status_estabelecimento_id == 1){
                 throw { message: "Aguarde a aprovação do seu estabelecimento para poder realizar o login", statusCode: 401 };
 			}
+
+			if(estabelecimento.status_estabelecimento_id == 3){
+                throw { message: "Estabelecimento está inativo. Entre em contato para mais informações", statusCode: 401 };
+			}
 			
 			if(estabelecimento.senha != e.senha){
                 throw { message: "Senha inválida", statusCode: 401 };
