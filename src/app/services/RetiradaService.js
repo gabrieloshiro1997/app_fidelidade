@@ -30,11 +30,18 @@ class RecompensaService {
 	ObterResgastesPorEstabelecimento = (estabelecimentoId) => {
 		return new Promise((resolve, reject) => {
 			connection.query(
-				`SELECT distinct r.id, u.nome, u.cpf, r.data_retirada , r.pontos_gastos FROM retirada r, usuario u WHERE usuario_id = u.id
-				 AND r.recompensa_id IN
-				 (
-					SELECT id FROM recompensa WHERE estabelecimento_id = ${estabelecimentoId}
-				 ) ORDER BY data_retirada DESC;`,
+				`select ret.pontos_gastos pontos_gastos,  
+				ret.data_retirada data_retirada,
+				rec.descricao descricao,
+				u.nome,
+				u.cpf
+				from retirada ret
+				inner join recompensa rec on
+				ret.recompensa_id = rec.id
+				inner join usuario u on
+				ret.usuario_id = u.id
+				where rec.estabelecimento_id = ${estabelecimentoId}
+				order by ret.data_retirada desc;`,
 				(err, rows) => {
 					if (err) reject({ err, message: "Erro ao realizar a consulta de recompensa por estabelecimento", statusCode: 500 });
 
