@@ -1,20 +1,20 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-   host: "smtp.gmail.com",
-   port: 465,
-   secure: true,
-   auth: {
-      user: "appfidelidade1@gmail.com",
-      pass: "appfidelidade@2020"
-   }
+	host: "smtp.gmail.com",
+	port: 465,
+	secure: true,
+	auth: {
+		user: "appfidelidade1@gmail.com",
+		pass: "appfidelidade@2020"
+	}
 });
 const enviarEmail = (email, senha) => {
-   transporter.sendMail({
-      from: 'appfidelidade1@gmail.com',
-      to: email,
-      subject: 'Cadastro App Fidelidade',
-      html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
+	transporter.sendMail({
+		from: 'appfidelidade1@gmail.com',
+		to: email,
+		subject: 'Cadastro App Fidelidade',
+		html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
         <tbody>
            <tr>
               <td>
@@ -27,19 +27,19 @@ const enviarEmail = (email, senha) => {
            </tr>
         </tbody>
      </table>`
-   }, (error, info) => {
-      if (error) {
-         console.log(error);
-      }
-   });
+	}, (error, info) => {
+		if (error) {
+			console.log(error);
+		}
+	});
 }
 
 const enviarEmailEstabelecimentoAprovado = (email, senha) => {
 	transporter.sendMail({
-	   from: 'appfidelidade1@gmail.com',
-	   to: email,
-	   subject: 'Cadastro App Fidelidade',
-	   html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
+		from: 'appfidelidade1@gmail.com',
+		to: email,
+		subject: 'Cadastro App Fidelidade',
+		html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
 		 <tbody>
 			<tr>
 			   <td>
@@ -53,18 +53,18 @@ const enviarEmailEstabelecimentoAprovado = (email, senha) => {
 		 </tbody>
 	  </table>`
 	}, (error, info) => {
-	   if (error) {
-		  console.log(error);
-	   }
+		if (error) {
+			console.log(error);
+		}
 	});
- }
+}
 
- const enviarEmailEstabelecimentoReprovado = (email) => {
+const enviarEmailEstabelecimentoReprovado = (email) => {
 	transporter.sendMail({
-	   from: 'appfidelidade1@gmail.com',
-	   to: email,
-	   subject: 'Cadastro App Fidelidade',
-	   html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
+		from: 'appfidelidade1@gmail.com',
+		to: email,
+		subject: 'Cadastro App Fidelidade',
+		html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
 		 <tbody>
 			<tr>
 			   <td>
@@ -76,12 +76,38 @@ const enviarEmailEstabelecimentoAprovado = (email, senha) => {
 		 </tbody>
 	  </table>`
 	}, (error, info) => {
-	   if (error) {
-		  console.log(error);
-	   }
+		if (error) {
+			console.log(error);
+		}
 	});
- }
-module.exports = { 
+}
+const enviarEmailRedefinirSenha = (email, token) => {
+	transporter.sendMail({
+		from: 'appfidelidade1@gmail.com',
+		to: email,
+		subject: 'Cadastro App Fidelidade',
+		html: `<table align="center" bgcolor="#EFEFEF" border="0" cellpadding="0" cellspacing="0" style="border-collapse:collapse" width="600">
+			 <tbody>
+				<tr>
+				   <td>
+					  <div style="background-color:#ffffff;color:#4b4b4b;margin:0 30px;padding:20px;border-radius:10px;font-size:13px">
+						 <p>Entre no link a baixo para a redefinição de senha.</p>
+						 <p>${token}</p>
+						 <p>O link permanecerá válido por 12 horas.</p>
+					  </div>
+				   </td>
+				</tr>
+			 </tbody>
+		  </table>`
+	}, (error, info) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+}
+module.exports = {
 	enviarEmail,
 	enviarEmailEstabelecimentoAprovado,
-	enviarEmailEstabelecimentoReprovado }
+	enviarEmailEstabelecimentoReprovado,
+	enviarEmailRedefinirSenha
+}
