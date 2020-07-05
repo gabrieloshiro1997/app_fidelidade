@@ -100,16 +100,29 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 })
 
-router.get('/redefinirSenha/:cpf', async (req, res) => {
+router.post('/EsqueciMinhaSenha', async (req, res) => {
     try {
-        let cpf = req.params.cpf;
-        const succes = await UsuarioModel.EnviarEmailRedefinirSenha(cpf);
+        let email = req.body.email;
+        const succes = await UsuarioModel.EnviarEmailRedefinirSenha(email);
 
         return res.status(200).send(succes);
     } catch (e) {
 
         return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
     }
-})
+});
+
+router.post('/RedefinirSenha', authMiddleware, async (req, res) => {
+    try {
+		let { email, senha } = req.body;
+
+        const succes = await UsuarioModel.RedefinirSenha(email, senha);
+
+        return res.status(200).send(succes);
+    } catch (e) {
+
+        return res.status(e.statusCode).send({ statusCode: e.statusCode, message: e.message, error: e.error });
+    }
+});
 
 module.exports = app => app.use('/api/usuario', router);

@@ -1,5 +1,6 @@
 const EstabelecimentoService = require('../services/EstabelecimentoService');
-const { enviarEmailEstabelecimentoAprovado, enviarEmailEstabelecimentoReprovado} =require('../modules/EnviarEmail');
+const { enviarEmailEstabelecimentoAprovado, enviarEmailEstabelecimentoReprovado, enviarEmailRedefinirSenha} =require('../modules/EnviarEmail');
+const AutenticacaoService = require('../services/AutenticacaoService');
 
 class EstabelecimentoModel {
 	ObterEstabelecimentos = async () => {
@@ -84,6 +85,53 @@ class EstabelecimentoModel {
 			
 		}
 	}
+
+	EnviarEmailRedefinirSenha = async (email) => {
+		try {
+			let u = await EstabelecimentoService.ObterEstabelecimentoEmail(email);
+
+			if (!u) {
+				throw { message: "Estabelecimento não encontrado", statusCode: 404 };
+			} else {
+
+				const token = AutenticacaoService.JwtSign(u.id, u.acesso_usuario_id);
+				let urlToken;
+
+				urlToken = `http://localhost:3001/RedefinirSenha/${token}/${email}`
+
+				enviarEmailRedefinirSenha(u.email, urlToken);
+				return {
+					mensagem: `Uma mensagem foi enviada para a redefinição de senha no email ${u.email.replace(/\D\D\D@/i, '***')}`
+				}
+			}
+
+		} catch (e) {
+
+			throw { error: e.err, message: e.message, statusCode: e.statusCode };
+		}
+	}
+
+	RedefinirSenha = async (email, senha) => {
+		try {
+
+			let estabelecimento = await EstabelecimentoService.ObterEstabelecimentoEmail(email);
+
+			if(!estabelecimento) {
+				throw { message: "Estabelecimento não encontrado", statusCode: 404 };
+			} 
+
+			if(!senha) {
+				throw { message: "Insira uma senha", statusCode: 400 };
+			} 
+
+			return await EstabelecimentoService.AtualizarSenha(email, senha);
+		} catch (e) {
+
+			throw { error: e.err, message: e.message, statusCode: e.statusCode };
+
+		}
+	}
+
 }
 
 module.exports = new EstabelecimentoModel();

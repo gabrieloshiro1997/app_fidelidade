@@ -71,9 +71,22 @@ class UsuarioService {
     ObterUsuarioEmailCPF = (email, cpf) => {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT id, nome, cpf, email FROM usuario WHERE (email = '${email}' OR cpf = '${cpf}')`, 
+                `SELECT id, nome, cpf, email, acesso_usuario_id FROM usuario WHERE (email = '${email}' OR cpf = '${cpf}')`, 
                 (err, rows) => {                                             
                     if(err) reject({ err, message: "Erro ao realizar a consulta de usuário", statusCode: 500 });
+    
+                    else resolve(rows[0]);
+                }
+            )}
+        )
+	}
+	
+	AtualizarSenha = (email, senha) => {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `UPDATE usuario SET senha = '${senha}' WHERE email = '${email}'`, 
+                (err, rows) => {                                          
+                    if(err) reject({ err, message: "Erro ao atualizar senha", statusCode: 500 });
     
                     else resolve(rows[0]);
                 }

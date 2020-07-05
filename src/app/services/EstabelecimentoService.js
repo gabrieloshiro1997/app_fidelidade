@@ -79,6 +79,32 @@ class EstabelecimentoService {
             )}
         )
 	}
+
+	ObterEstabelecimentoEmail = (email) => {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT * FROM estabelecimento WHERE email = '${email}'`, 
+                (err, rows) => {                                             
+                    if(err) reject({ err, message: "Erro ao realizar a consulta de estabelecimento", statusCode: 500 });
+    
+                    else resolve(rows[0]);
+                }
+            )}
+        )
+	}
+
+	AtualizarSenha = (email, senha) => {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `UPDATE estabelecimento SET senha = '${senha}' WHERE email = '${email}'`, 
+                (err, rows) => {                                          
+                    if(err) reject({ err, message: "Erro ao atualizar senha", statusCode: 500 });
+    
+                    else resolve(rows[0]);
+                }
+            )}
+        )
+    }
 }
 
 module.exports = new EstabelecimentoService();
